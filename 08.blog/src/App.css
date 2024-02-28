@@ -1,0 +1,22 @@
+.App {
+  text-align: center;
+}
+
+.title1 {
+  background-color: rgb(2, 26, 133);
+  color: white;
+  padding-left: 20px;
+  height: 50px;
+  line-height: 50px;
+}
+
+.list {
+  text-align: left;
+  padding-left: 20px;
+  margin-bottom: 40px;
+  border-bottom: 1px solid gray;
+}
+
+.span-left {
+  margin-left: 50px;
+}
