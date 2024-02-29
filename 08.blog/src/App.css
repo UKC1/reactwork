@@ -20,3 +20,9 @@
 .span-left {
   margin-left: 50px;
 }
+
+.modal {
+  text-align: left;
+  background-color: rgb(231, 231, 231);
+  padding-left: 10px 20px;
+}
