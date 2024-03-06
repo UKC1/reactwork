@@ -1,0 +1,28 @@
+.App {
+  text-align: center;
+}
+
+.main-bg {
+  height: 450px;
+  background-image: url("./main_bg.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* 애니메이션 */
+.start {
+  opacity: 0;
+}
+.end {
+  opacity: 1;
+  transition: opacity 2s;
+}
+
+/* .start {
+  transform: scale(0);
+}
+.end {
+  transform: scale(1);
+  transition: all 2s;
+} */

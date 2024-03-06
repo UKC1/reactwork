@@ -1,31 +1,18 @@
+/* 전체 레이아웃 스타일링 */
 .App {
   text-align: center;
+  font-family: 'Arial', sans-serif;
+  background-color: #f0f0f0;
 }
 
+/* 로고 애니메이션 */
 .App-logo {
-  height: 40vmin;
-  pointer-events: none;
+  height: 20vmin;
+  animation: App-logo-spin infinite 20s linear;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
+h1 {
+  font-display:initial;
 }
 
 @keyframes App-logo-spin {
@@ -36,3 +23,54 @@
     transform: rotate(360deg);
   }
 }
+
+/* 폼 스타일링 */
+.login-form, .signup-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%; /* 폼 너비를 화면에 맞춤 */
+  max-width: 400px; /* 최대 너비 설정 */
+  margin: 20px auto; /* 중앙 정렬 */
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.login-form input, .signup-form input {
+  width: 90%; 
+  padding: 12px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* 헤더와 푸터 스타일링 */
+.header, .footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(100, 100, 100); 
+  color: white;
+  width: 100%;
+  padding: 10px 0;
+  position: fixed;
+}
+
+.buttonForm {
+  display: flex;
+  gap: 10px;
+}
+
+button {
+  width: 100px; 
+  padding: 10px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 5px;
+  color: black;
+  font-size: 1em;
+  transition: background-color 0.3s;
+}
+
