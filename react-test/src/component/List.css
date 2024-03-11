@@ -1,0 +1,21 @@
+.List {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: start;
+  }
+  .List input{
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid lightgray;
+    padding: 20px 0;
+  }
+  .List input:focus{
+    outline: none;
+    border-bottom: 2px solid  rgb(19, 80, 7);
+  }
+  .List .todos_wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }

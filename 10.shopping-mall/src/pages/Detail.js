@@ -1,9 +1,16 @@
 import './../App.css';
 // root부터 시작하니 상위 폴더면 ..
 import { Container, Row, Col, Button, Nav } from 'react-bootstrap';
-import { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useContext, useEffect, useState} from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Context1 } from './../App';
+import { addItem } from '../store';
+import { useDispatch } from 'react-redux';
+
+/*
+    Redux사용
+    1) 설치 : npm i @reduxjs/toolkit@1.8.1 react-redux
+*/
 
 /*
     전환 애니메이션
@@ -106,6 +113,20 @@ function Detail(props) {
     let findId = props.shoes.find(function(x) {
         return x.id == id
     })
+    let dispatch = useDispatch();
+
+    // 재렌더링 되면서 계속 수행을 함
+    useEffect(()=>{
+        console.log("출력" + findId.id);
+        
+        let w = localStorage.getItem('watched');
+        w = JSON.parse(w);
+        w.push(findId.id);
+        w = new Set(w);
+        w = Array.from(w);
+        localStorage.setItem('watched', JSON.stringify(w));
+    }, []) // 맨처음 한 번만 들어감
+    let navigate = useNavigate();
     
     return(
         <>
@@ -124,7 +145,16 @@ function Detail(props) {
                         <h4>{findId.title}</h4>
                         <p className='tcolor'>{findId.content}</p>
                         <p>{findId.price}</p>
-                        <Button variant="secondary">주문하기</Button>
+                        <Button variant="primary" onClick={()=>{
+                            // dispatch(addItem({ id: 상품ID, name: "상품명", count: 1 }));
+
+                            dispatch(addItem({id: findId.id, name: findId.title, count: 1}));
+                            alert('장바구니에 담겼습니다');
+                            // console.log(localStorage.getItem('watch'));    
+                        }}>주문하기</Button>
+                        <Button variant="primary" onClick={()=>{
+                            navigate(`/cart`);  
+                        }}>장바구니</Button>
                     </Col>
                 </Row>
             </Container>
@@ -165,7 +195,7 @@ function TabContent({tab, shoes}) {
     return (
         // 반드시 start 뒤에 한 칸 뛰어줘야 함
     <div className={`start ${fade}`}>
-        {[<div>{stock}</div>, <div>내용1</div>, <div>내용2</div>][tab]}
+        {[<div>내용0</div>, <div>내용1</div>, <div>내용2</div>][tab]}
     </div>
     )
 }

@@ -1,12 +1,20 @@
 import './App.css';
 import { Navbar,Container,Nav, Row, Col, NavDropdown, Button } from 'react-bootstrap';
-import { createContext, useState } from 'react';
+import { createContext, useState, useEffect } from 'react';
 import { Routes, Route, useNavigate, Outlet } from 'react-router-dom';
 import pList from './data/ProductList';
 import Detail from './pages/Detail';
 import axios from 'axios';
+import Cart from './pages/Cart';
+import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
 
-/*  
+/*
+  Redux 사용
+  1) 설치 : npm i @reduxjs/toolkit@1.8.1 react-redux
+
+  ajax에서 실시간으로 재전송 자동으로 하기
+  설치 : npm i react-query
+
   axios 설치
   npm i axios
 */
@@ -14,6 +22,34 @@ import axios from 'axios';
 export let Context1 = createContext();
 
 function App() {
+  useEffect(()=>{
+    if(localStorage.getItem('watched') == null)
+      localStorage.setItem('watched', JSON.stringify( [] ))
+  },[])
+
+  // axios.get('https://raw.githubusercontent.com/professorjiwon/data/main/userdata.json');
+
+  const [result, setResult] = useState('');
+  useQuery('userdata', () => {
+    axios.get('https://raw.githubusercontent.com/professorjiwon/data/main/userdata.json')
+      .then((a) => {
+        console.log(a.data.name);
+        setResult(a.data.name);
+      })
+  })
+
+  localStorage.setItem('name', 'kim');
+
+  // JSON으로 바꾸어 넣음
+  let obj = {'tel':'010-1111-2222'};
+  localStorage.setItem('data', JSON.stringify(obj));
+
+
+  // let name = localStorage.getItem('name');
+  // let data = localStorage.getItem('data')
+  // console.log(data)                 // 객체출력
+  // console.log(JSON.parse(data).tel) // tel 키에 해당하는 값만 출력
+
   let [stock, setStock] = useState([10,11,12]);
   let [shoes, setShoes] = useState(pList);  
   let [num, setNum] = useState(2);
@@ -21,7 +57,7 @@ function App() {
   let navigate = useNavigate(); // 페이지의 이동을 도와주는 함수
 
   return (
-    <div className="App">  
+    <div className="App">
       <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
       <Container>
         <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
@@ -31,6 +67,7 @@ function App() {
             <Nav.Link onClick={()=>{navigate('/')}}>Home</Nav.Link>
             {/* <Nav.Link onClick={()=>{navigate('/detail')}}>Detail</Nav.Link> */}
             <Nav.Link onClick={()=>{navigate('/cart')}}>Cart</Nav.Link>
+            <Nav.Link onClick={()=>{navigate(-1)}}>뒤로</Nav.Link>
             <NavDropdown title="Dropdown" id="collapsible-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">
@@ -44,6 +81,7 @@ function App() {
               </NavDropdown>
             </Nav>
         </Navbar.Collapse>
+        <Nav className='me-auto'>{result}님 환영합니다</Nav>
       </Container>
      </Navbar>
 
@@ -56,7 +94,7 @@ function App() {
                   {
                     shoes.map((list, i) => {
                       return(
-                        <PListImg shoes={list} i={i+1}/>
+                        <PListImg shoes={list} i={i+1} navigate={navigate}/>
                       )
                     })
                   }
@@ -105,9 +143,10 @@ function App() {
           <Context1.Provider value={{stock, shoes}}>
              <Detail shoes={shoes}/>
           </Context1.Provider>
+          
         }/>  
         
-        <Route path='/cart' element={<div>장바구니</div>}/>
+        <Route path='/cart' element={<div>{<Cart/>}</div>}/>
         <Route path='*' element={<div>없는 페이지 입니다.</div>}/> 
       
         <Route path='/about' element={ <About /> }>
@@ -148,7 +187,9 @@ function PListImg(props) {
   return (
   <>
     <Col md={4}>
-      <img src={`${process.env.PUBLIC_URL}/img/shoes.${props.i}.png`} width="80%"/>
+      <img src={`${process.env.PUBLIC_URL}/img/shoes.${props.i}.png`} width="80%" onClick={()=>{
+        props.navigate(`/detail/${props.i - 1}`);   
+      }}/>
       <h4>{props.shoes.title}</h4>
       <p>{props.shoes.price}</p>
     </Col>
