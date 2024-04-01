@@ -1,0 +1,29 @@
+설치
+1. node.js 설치
+2. 설치후 vscode 열기
+   2.1  터미널 열어(command prompt 로 변경) 버전 확인
+        node -v
+        npm -v
+
+   2.2  확장설치
+        Reactjs Code snippets
+        Auto Import - ES6, TS, JSX, ..  
+
+3. 프로젝트 만들기
+   3.1 command창에서
+       npx create-react-app 01.my-app
+		             프로젝트명
+
+   3.2 실행
+       cd 01.my-app   엔터
+       npm start
+
+* git에 올릴 때
+gitignore.io 설정
+
+깃에 올려져 있는 프로젝트를 받아서 실행 모듈 설치
+   command창에서
+1. cd 01.my-app   엔터(프로젝트로 들어가기)
+
+2. npm install (모듈 설치 후 실행)
+   
